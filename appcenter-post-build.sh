@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo $APPCENTER_REACTNATIVE_PACKAGE
+
+echo $APPCENTER_SOURCE_DIRECTORY
+ls $APPCENTER_SOURCE_DIRECTORY
+
+echo $APPCENTER_OUTPUT_DIRECTORY
+ls $APPCENTER_OUTPUT_DIRECTORY
+
+iOSSymbolFileName="$(find . -type d -name *.dSYM -print0)"
+
+echo $iOSSymbolFileName
