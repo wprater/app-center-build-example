@@ -5,12 +5,16 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text onPress={missingFn}>crash hard</Text>
+        <Text onPress={foo}>crash hard</Text>
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
       </View>
     );
   }
+}
+
+function foo() {
+  throw new Error('boom')
 }
 
 const styles = StyleSheet.create({
