@@ -5,4 +5,4 @@ import { Client } from 'bugsnag-react-native';
 
 const bugsnag = new Client();
 
-AppRegistry.registerComponent('BuildTest', () => App);
+AppRegistry.registerComponent('buildtest', () => App);
