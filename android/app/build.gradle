@@ -116,8 +116,18 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {
+            storeFile file('../keystores/release.jks')
+            keyAlias 'release'
+            storePassword 'foobar'
+            keyPassword 'foobar'
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
