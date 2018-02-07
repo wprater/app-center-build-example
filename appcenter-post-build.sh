@@ -43,9 +43,18 @@ done
 
 [ -z "$BUGSNAG_API_KEY" ] && echo "You must set a BUGSNAG_API_KEY" && exit 1
 
+if [ -z "$APPCENTER_XCODE_PROJECT" ]; then
+	bundleName=dummy-sourcemap-main.jsbundle
+else
+	bundleName=index.android.bundle
+fi
+bundleLocation="${APPCENTER_SOURCE_DIRECTORY}/${bundleName}"
+sourceMapLocation="$APPCENTER_SOURCE_DIRECTORY/${bundleName}.map"
+
 yarn run bugsnag-sourcemaps upload \
 	--api-key $BUGSNAG_API_KEY \
 	--app-version 1.0.0 \
-	--source-map $APPCENTER_SOURCE_DIRECTORY/index.ios.map \
-	--minified-file $APPCENTER_SOURCE_DIRECTORY/dummy-sourcemap-main.jsbundle \
-	--minified-url main.jsbundle
+	--source-map $sourceMapLocation \
+	--minified-file $bundleLocation \
+	--minified-url $bundleName \
+	--upload-sources
