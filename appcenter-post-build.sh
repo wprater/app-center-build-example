@@ -54,6 +54,8 @@ else
 fi
 sourceMapLocation="$APPCENTER_SOURCE_DIRECTORY/${sourcemapName}"
 
+echo $IOS_BUNDLE_FILE
+
 yarn run bugsnag-sourcemaps upload \
 	--api-key $BUGSNAG_API_KEY \
 	--app-version 1.0.0 \
