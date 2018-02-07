@@ -44,8 +44,8 @@ done
 [ -z "$BUGSNAG_API_KEY" ] && echo "You must set a BUGSNAG_API_KEY" && exit 1
 
 if [ -n "$APPCENTER_XCODE_PROJECT" ]; then
-	bundleName=dummy-sourcemap-main.jsbundle
-	bundleLocation="${APPCENTER_SOURCE_DIRECTORY}/${bundleName}"
+	bundleName=main.jsbundle
+	bundleLocation="${APPCENTER_SOURCE_DIRECTORY}/dummy-sourcemap-main.jsbundle"
 	sourcemapName=index.ios.map
 else
 	bundleName=index.android.bundle
