@@ -104,6 +104,9 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0.0"
+
+        setProperty("archivesBaseName", "$applicationId-$versionName-$versionCode")
+
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
