@@ -116,6 +116,7 @@ if [[ "$CONFIGURATION" = "Debug" && ! "$PLATFORM_NAME" == *simulator ]]; then
 fi
 
 BUNDLE_FILE="$DEST/main.jsbundle"
+export IOS_BUNDLE_FILE=BUNDLE_FILE
 
 $NODE_BINARY $CLI_PATH $BUNDLE_COMMAND \
   $CONFIG_ARG \
