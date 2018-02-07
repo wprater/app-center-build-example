@@ -972,7 +972,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\nexport SOURCEMAP_FILE=\"/Users/wprater/Development/BuildTest/foo2.map\"\n../bin/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\nexport SOURCEMAP_FILE=\"/Users/wprater/Development/BuildTest/foo2.map\"\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
