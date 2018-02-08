@@ -156,7 +156,7 @@ async function generateVersionName() {
     );
   }
 
-  const featurelines = diffToDefault.split('\n');
+  const featurelines = diffToDefault ? diffToDefault.split('\n') : [];
   const commitsInFeatureBranch = diffToDefault === '' ? 0 : featurelines.length;
 
   // the sha1 of the latest commit in the default branch
