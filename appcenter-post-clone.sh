@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git reflog
+
 status=$(git status)
 echo $?
 echo $status
