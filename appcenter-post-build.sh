@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+git symbolic-ref --short -q HEAD
+
 # echo $APPCENTER_REACTNATIVE_PACKAGE
 # package.json
 
