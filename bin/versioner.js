@@ -50,7 +50,7 @@ export IOS_VERSION="${packageVersion}"
 export ANDROID_VERSION_NAME="${packageVersion}"
 export IOS_VERSION_BUILD_NUMBER="${GitVersion.version}"
 export ANDROID_VERSION_CODE="${GitVersion.version}"
-`,
+`
   );
 
   console.dir(GitVersion);
@@ -74,7 +74,7 @@ async function generateVersionName() {
     if (err.code > 0) {
       console.log(
         `ERROR: can't generate a git version, this is not a git project
-           -> Not a git repository (or any of the parent directories): .git`,
+           -> Not a git repository (or any of the parent directories): .git`
       );
     }
     process.exit(1);
@@ -90,7 +90,7 @@ async function generateVersionName() {
 
   // read ext properties
   // const configuration = getPropertyOrDefault(rootProject, "gitVersioner", [:]) as Map
-  const configuration = { get() {} };
+  const configuration = {get() {}};
 
   const stableBranches = configuration.get('stableBranches') || [
     'master',
@@ -98,7 +98,7 @@ async function generateVersionName() {
   ];
   let defaultBranch = configuration.get('defaultBranch') || 'develop';
   const yearFactor = parseFloat(
-    (configuration.get('yearFactor') || '1000').toString(),
+    (configuration.get('yearFactor') || '1000').toString()
   );
   const snapshotEnabled = configuration.get('snapshotEnabled') !== false;
   const localChangesCountEnabled =
@@ -107,32 +107,34 @@ async function generateVersionName() {
   const shortNameClosure = configuration.get('shortName');
 
   // get information from git
-  let currentBranch = process.env.APPCENTER_BRANCH || process.env.MOBILECENTER_BRANCH;
-  if (currentBranch == null) ({ stdout: currentBranch } = await execa(
-    'git',
-    ['symbolic-ref', '--short', '-q', 'HEAD'],
-    {
-      cwd: rootDir,
-    },
-  ));
+  let currentBranch =
+    process.env.APPCENTER_BRANCH || process.env.MOBILECENTER_BRANCH;
+  if (currentBranch == null)
+    ({stdout: currentBranch} = await execa(
+      'git',
+      ['symbolic-ref', '--short', '-q', 'HEAD'],
+      {
+        cwd: rootDir,
+      }
+    ));
 
   if (stableBranches.includes(currentBranch)) defaultBranch = currentBranch;
 
-  const { stdout: currentCommit } = await execa('git', ['rev-parse', 'HEAD'], {
+  const {stdout: currentCommit} = await execa('git', ['rev-parse', 'HEAD'], {
     cwd: rootDir,
   });
 
-  const { stdout: log } = await execa(
+  const {stdout: log} = await execa(
     'git',
     ['log', '--pretty=format:%at', '--reverse'],
     {
       cwd: rootDir,
-    },
+    }
   );
   const logs = log === '' ? [] : log.split('\n');
   const initialCommitDate = logs.length > 0 ? logs[0] : 0;
 
-  const { stdout: localChanges } = await execa('git', ['diff-index', 'HEAD'], {
+  const {stdout: localChanges} = await execa('git', ['diff-index', 'HEAD'], {
     cwd: rootDir,
   });
 
@@ -140,38 +142,39 @@ async function generateVersionName() {
     localChanges === '' ? 0 : localChanges.split('\n').length;
   hasLocalChanges = localChangesCount > 0;
 
-  let diffToDefault = '';
+  let diffToDefault;
   try {
-    const { stdout } = await execa('git', ['rev-list', `${defaultBranch}..`], {
+    ({diffToDefault} = await execa('git', ['rev-list', `${defaultBranch}..`], {
       cwd: rootDir,
-    });
+    }));
     diffToDefault = stdout;
   } catch (err) {
-    diffToDefault = await execa(
+    ({diffToDefault} = await execa(
       'git',
       ['rev-list', `origin/${defaultBranch}..`],
       {
         cwd: rootDir,
-      },
-    );
+      }
+    ));
   }
 
   const featurelines = diffToDefault ? diffToDefault.split('\n') : [];
+
   const commitsInFeatureBranch = diffToDefault === '' ? 0 : featurelines.length;
 
   // the sha1 of the latest commit in the default branch
   // TODO: what if there are no common commits.  return `currentCommit`
-  const { stdout: lastestDefaultBranchCommitSha1 } = await execa(
+  const {stdout: lastestDefaultBranchCommitSha1} = await execa(
     'git',
     ['merge-base', defaultBranch, currentBranch],
-    { cwd: rootDir },
+    {cwd: rootDir}
   );
 
   // get additional information
-  const { stdout: defaultBranchDatesLog } = await execa(
+  const {stdout: defaultBranchDatesLog} = await execa(
     'git',
     ['log', '--pretty=format:%at', '-n', '1', lastestDefaultBranchCommitSha1],
-    { cwd: rootDir },
+    {cwd: rootDir}
   );
 
   const latestCommitDate =
@@ -180,10 +183,10 @@ async function generateVersionName() {
       : Number(defaultBranchDatesLog);
 
   // commit count is the first part of the version
-  const { stdout: defautBranchCommitCount } = await execa(
+  const {stdout: defautBranchCommitCount} = await execa(
     'git',
     ['rev-list', '--count', lastestDefaultBranchCommitSha1],
-    { cwd: rootDir },
+    {cwd: rootDir}
   );
 
   const commitCount =
