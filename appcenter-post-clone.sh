@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-head1=$(git symbolic-ref --short -q HEAD)
+head1=$(git symbolic-ref --short HEAD)
 echo $?
 echo $head1
 
