@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 
-git reflog
+env
 
-status=$(git status)
-echo $?
-echo $status
+sha=$(git reflog --format=format:%H -n 1)
 
-head1=$(git symbolic-ref --short HEAD)
-echo $?
-echo $head1
-
-head=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-echo $?
-echo $head
+git rev-list master..
