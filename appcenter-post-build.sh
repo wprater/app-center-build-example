@@ -19,6 +19,11 @@
 # ls $APPCENTER_OUTPUT_DIRECTORY
 # buildtest.xcarchive
 
+IS_IOS_PROJECT=false
+[ -n "$APPCENTER_XCODE_PROJECT" ] && IS_IOS_PROJECT=true
+
+echo "Is iOS project $IS_IOS_PROJECT"
+
 ## Upload dSYM files to BugSnag
 find $APPCENTER_OUTPUT_DIRECTORY -type d -iname "*.xcarchive" -print0 | while IFS= read -r -d $'\0' xcarchiveDir; do
 	./bin/bugsnag-dsym-upload "${xcarchiveDir}/dSYMs"
