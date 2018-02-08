@@ -162,13 +162,22 @@ async function generateVersionName() {
 
   const commitsInFeatureBranch = diffToDefault === '' ? 0 : featurelines.length;
 
-  // the sha1 of the latest commit in the default branch
-  // TODO: what if there are no common commits.  return `currentCommit`
-  const {stdout: lastestDefaultBranchCommitSha1} = await execa(
+  let {stdout: defaultAndFeatureLines} = await execa(
     'git',
-    ['merge-base', defaultBranch, currentBranch],
+    ['rev-list', currentCommit],
     {cwd: rootDir}
   );
+
+  defaultAndFeatureLines = defaultAndFeatureLines.split('\n');
+
+  // the sha1 of the latest commit in the default branch
+  const findUniqueSha = sha => !featurelines.includes(sha);
+  const uniqueSha = defaultAndFeatureLines.filter(findUniqueSha);
+
+  const lastestDefaultBranchCommitSha1 =
+    defaultAndFeatureLines.length === 1
+      ? defaultAndFeatureLines[0]
+      : uniqueSha.length ? uniqueSha[0] : currentCommit;
 
   // get additional information
   const {stdout: defaultBranchDatesLog} = await execa(
