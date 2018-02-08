@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-echo git symbolic-ref --short -q HEAD
+head1=$(git symbolic-ref --short -q HEAD)
 echo $?
+echo $head1
 
-echo git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3
+head=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
 echo $?
+echo $head
