@@ -108,13 +108,13 @@ async function generateVersionName() {
 
   // get information from git
   let currentBranch = process.env.APPCENTER_BRANCH || process.env.MOBILECENTER_BRANCH;
-  if (currentBranch == null) ({ stdout: currentBranch }) = await execa(
+  if (currentBranch == null) ({ stdout: currentBranch } = await execa(
     'git',
     ['symbolic-ref', '--short', '-q', 'HEAD'],
     {
       cwd: rootDir,
     },
-  );
+  ));
 
   if (stableBranches.includes(currentBranch)) defaultBranch = currentBranch;
 
