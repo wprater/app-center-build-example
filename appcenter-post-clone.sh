@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+status=$(git status)
+echo $?
+echo $status
+
 head1=$(git symbolic-ref --short HEAD)
 echo $?
 echo $head1
